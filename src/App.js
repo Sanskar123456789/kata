@@ -16,26 +16,18 @@ function App() {
   const add = (num) => {
     if (num === "") return 0;
 
-    let delimiter = /[\n,]+/; // Default delimiter (commas and newlines)
+    let i =0;
     if (num.startsWith("//")) {
-      // Extract custom delimiter
-      const delimiterMatch = num.match(/^\/\/(.+)\n/);
-      if (delimiterMatch) {
-        delimiter = new RegExp(`[${delimiterMatch[1]}]+`); // Custom delimiter
-        num = num.slice(delimiterMatch[0].length); // Remove the delimiter part
-      }
+      i = String(num).indexOf('/n')
     }
-
-    // Split by the determined delimiter(s)
-    const numArray = num.split(delimiter);
-
     let total = 0;
-    for (let i = 0; i < numArray.length; i++) {
-      if (Number(numArray[i])) {
-        total += Number(numArray[i]);
+    num = num.split(/[\n,]+/);
+    for(i; i<num.length; i++) {
+      if(Number(num[i])) {
+        total+= Number(num[i]);
       }
     }
-    return total;
+    return total
   };
 
   return (
