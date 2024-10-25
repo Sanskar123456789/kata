@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   const [sum, setSum] = React.useState(0);
   const [numbers, setNumbers] = React.useState("");
+  const [exception, setException] = React.useState("");
 
   React.useEffect(() => {
     console.log(add("")); // Expected output: 0
@@ -12,6 +13,7 @@ function App() {
     console.log(add("1\n2,3")); // Expected output: 6
     console.log(add("4\n5\n6,7")); // Expected output: 22
     console.log(add("//;\n4\n5\n6,7")); // Expected output: 22
+    // console.log(add("//;\n1\n1,2\n-1,4\n23, 0,\n-1,-9")); // Expected output: 31
   }, []);
 
   const add = (num) => {
@@ -23,10 +25,17 @@ function App() {
     }
     let total = 0;
     num = num.split(/[\n,]+/);
+    let negArr = [];
     for(i; i<num.length; i++) {
-      if(Number(num[i])) {
+      if(Number(num[i]) < 0) {
+        negArr.push(num[i])
+      }
+      else if(Number(num[i])) { 
         total+= Number(num[i]);
       }
+    }
+    if(negArr.length > 0) {
+      setException(`Negative numbers not allowed: ${negArr.join(', ')}`)
     }
     return total
   };
@@ -43,6 +52,7 @@ function App() {
         Calculate
       </button>
       <div className="result">Result: {sum}</div>
+      <small className="exceptions">{exception}</small>
     </div>
   );
 }
