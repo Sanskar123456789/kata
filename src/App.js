@@ -11,6 +11,7 @@ function App() {
     console.log(add("1,5")); // Expected output: 6
     console.log(add("1\n2,3")); // Expected output: 6
     console.log(add("4\n5\n6,7")); // Expected output: 22
+    console.log(add("//;\n4\n5\n6,7")); // Expected output: 22
   }, []);
 
   const add = (num) => {
