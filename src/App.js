@@ -9,18 +9,25 @@ function App() {
     console.log(add("")); // Expected output: 0
     console.log(add("1")); // Expected output: 1
     console.log(add("1,5")); // Expected output: 6
+    console.log(add("1\n2,3")); // Expected output: 6
+    console.log(add("4\n5\n6,7")); // Expected output: 22
   }, []);
 
   const add = (num) => {
     if (num === "") return 0;
-
-    const numArray = num.split(",").map(Number);
-    return numArray.reduce((sum, num) => sum + num, 0);
+    let total = 0;
+    num = num.split(/[\n,]+/);
+    for(let i=0; i<num.length; i++) {
+      if(Number(num[i])) {
+        total+= Number(num[i]);
+      }
+    }
+    return total
   };
 
   return (
-    <>
-      <input
+    <div className="container">
+      <textarea
         type="text"
         className="inp-text"
         placeholder="Enter Text"
@@ -30,7 +37,7 @@ function App() {
         Calculate
       </button>
       <div className="result">Result: {sum}</div>
-    </>
+    </div>
   );
 }
 
