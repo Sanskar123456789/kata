@@ -15,14 +15,27 @@ function App() {
 
   const add = (num) => {
     if (num === "") return 0;
-    let total = 0;
-    num = num.split(/[\n,]+/);
-    for(let i=0; i<num.length; i++) {
-      if(Number(num[i])) {
-        total+= Number(num[i]);
+
+    let delimiter = /[\n,]+/; // Default delimiter (commas and newlines)
+    if (num.startsWith("//")) {
+      // Extract custom delimiter
+      const delimiterMatch = num.match(/^\/\/(.+)\n/);
+      if (delimiterMatch) {
+        delimiter = new RegExp(`[${delimiterMatch[1]}]+`); // Custom delimiter
+        num = num.slice(delimiterMatch[0].length); // Remove the delimiter part
       }
     }
-    return total
+
+    // Split by the determined delimiter(s)
+    const numArray = num.split(delimiter);
+
+    let total = 0;
+    for (let i = 0; i < numArray.length; i++) {
+      if (Number(numArray[i])) {
+        total += Number(numArray[i]);
+      }
+    }
+    return total;
   };
 
   return (
